@@ -1,5 +1,8 @@
+import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.producer.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -9,15 +12,22 @@ import java.util.concurrent.ExecutionException;
 public class MyTopicProducer {
     public static void main(String[] args) {
         Properties props = new Properties();
-//        props.load();
-        props.put("bootstrap.servers", "127.0.0.1:9091");
-        props.put("acks", "all");
-        props.put("retries", 0);
-        props.put("batch.size", 16384);
-        props.put("linger.ms", 1);
-        props.put("buffer.memory", 33554432);
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        InputStream in = ClassLoader.getSystemResourceAsStream("kafka-producer.properties");
+        try {
+            props.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+//        props.put("bootstrap.servers", "127.0.0.1:9091");
+//        props.put("acks", "all");
+//        props.put("retries", 0);
+//        props.put("batch.size", 16384);
+//        props.put("linger.ms", 1);
+//        props.put("buffer.memory", 33554432);
+//        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+//        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
 
         Producer<String, String> producer = new KafkaProducer<>(props);
         for(int i = 0; i < 100; i++)
