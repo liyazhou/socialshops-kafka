@@ -32,10 +32,11 @@ public class ProducerTest extends Thread {
         while (true) {
             String messageStr = "Message_" + messageNo;
             System.out.println("Send:" + messageStr);
-            producer.send(new ProducerRecord("my_test", messageStr));
+            producer.send(new ProducerRecord("ssprod-test", messageStr));
+//            producer.send(new ProducerRecord("ssprod", messageStr));
             messageNo++;
             try {
-                sleep(20);
+                sleep(1);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

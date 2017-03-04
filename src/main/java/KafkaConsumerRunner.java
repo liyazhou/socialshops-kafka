@@ -19,7 +19,7 @@ public class KafkaConsumerRunner implements Runnable {
         try {
             consumer.subscribe(Arrays.asList("topic"));
             while (!closed.get()) {
-                ConsumerRecords records = consumer.poll(10000);
+                ConsumerRecords records = consumer.poll(5);
                 // Handle new records
             }
         } catch (WakeupException e) {

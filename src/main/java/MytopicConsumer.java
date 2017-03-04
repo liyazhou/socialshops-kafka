@@ -6,32 +6,25 @@
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.consumer.OffsetAndMetadata;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.common.errors.WakeupException;
 
-import java.io.Serializable;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MytopicConsumer {
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "127.0.01:9091");
-        props.put("group.id", "test");
+
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("group.id", "ssprod-consumer-0");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList("my-topic"));
+        consumer.subscribe(Arrays.asList("ssprod-test"));
 //        consumer.subscribe(Arrays.asList("foo", "bar"));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);

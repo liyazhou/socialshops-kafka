@@ -30,9 +30,11 @@ public class ConsumerTest extends Thread {
 
     @Override
     public void run() {
-        this.consumer.subscribe(Arrays.asList("my_test"));
+//        this.consumer.subscribe(Arrays.asList("ssprod"));
+        this.consumer.subscribe(Arrays.asList("ssprod-test"));
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
+//            ConsumerRecords<String, String> records = consumer.poll(1);
+            ConsumerRecords<String, String> records = consumer.poll(0);
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("receive:" + record.value());
             }
